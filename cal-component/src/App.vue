@@ -2,29 +2,21 @@
   <main>
     <div class="main__container">
       <h3>Notre petite bibliothèque de composants</h3>
-      <inputFamily/>
-      <inputFamily
-        v-model="myName" 
-        label="Prénom" 
-        placeholder="Entrez votre prénom" 
-        id="inputFirstName" 
-        name="inputFirstName" 
-        type="text"
-      />
+      <loginForm/>
     </div>
   </main>
 </template>
 
 <script>
 import mainButton from './components/mainButton.vue';
-import inputFamily from './components/inputFamily.vue';
+import loginForm from './components/loginForm.vue';
 export default {
 
   name: 'App',
 
   components:{
-    mainButton,
-    inputFamily
+    mainButton, 
+    loginForm
   },
 
   setup() {
