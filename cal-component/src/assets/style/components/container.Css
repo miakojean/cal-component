@@ -1,0 +1,21 @@
+main {
+    width: 100%;
+    height: 100vh; /* Utilisez 100vh pour que le conteneur prenne toute la hauteur de la fenêtre */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main__container {
+    /* Donnez une taille fixe à l'élément pour qu'il soit visiblement centré */
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: center;
+    /* Les autres propriétés Flexbox ici ne sont nécessaires que si vous avez des éléments à centrer à l'intérieur de main__container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
