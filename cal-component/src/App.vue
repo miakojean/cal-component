@@ -1,7 +1,6 @@
 <template> 
   <main>
     <div class="main__container">
-      <h3>Notre petite bibliothèque de composants</h3>
       <loginForm/>
     </div>
   </main>

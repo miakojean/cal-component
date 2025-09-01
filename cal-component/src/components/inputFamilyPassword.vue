@@ -1,19 +1,27 @@
 <template>
   <div class="input__family">
-    <label :for="inputId">Email ou username</label>
+    <label :for="inputId">Mot de passe</label>
     <div class="input__password"
         :class="{
-            'input-filled': fieldInfo !=='',
-            'input-error': showError
+          'input-filled': password !=='',
+          'input-error': showError
         }"
     >
       <input
-        type="text"
+        :type="isVisible ? 'text' : 'password'"
         :id="inputId"
         :placeholder="placeholder"
-        v-model="fieldInfo"
+        v-model="password"
         @blur="handleBlur"
       />
+      <button
+        type="button"
+        class="toggle__btn"
+        @click="toggleVisibility"
+        :aria-label="isVisible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+      >
+        <i :class="isVisible ? 'ri-eye-off-line' : 'ri-eye-line'"></i>
+      </button>
     </div>
     <p class="error__message" v-if="showError">{{ errorMessage }}</p>
   </div>
@@ -30,11 +38,11 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "Entrer email ou username"
+      default: "Entrer votre mot de passe"
     },
     inputId: {
       type: String,
-      default: 'username'
+      default: "password"
     },
     errorMessage: {
       type: String,
@@ -46,20 +54,24 @@ export default {
     }
   },
   emits: ['update:modelValue', 'blur'],
-  
   setup(props, { emit }) {
-    const fieldInfo = ref(props.modelValue);
+    const isVisible = ref(false);
+    const password = ref(props.modelValue);
     const touched = ref(false);
 
     const showError = computed(() => {
-      return props.showValidation && fieldInfo.value.trim() === '';
+      return props.showValidation && password.value.trim() === '';
     });
+
+    const toggleVisibility = () => {
+      isVisible.value = !isVisible.value;
+    };
 
     watch(() => props.modelValue, (newVal) => {
-      fieldInfo.value = newVal;
+      password.value = newVal;
     });
 
-    watch(fieldInfo, (newVal) => {
+    watch(password, (newVal) => {
       emit('update:modelValue', newVal);
     });
 
@@ -69,8 +81,10 @@ export default {
     };
 
     return {
-      fieldInfo,
+      isVisible,
+      password,
       showError,
+      toggleVisibility,
       handleBlur
     };
   }
@@ -81,7 +95,6 @@ export default {
 .input__family {
   display: flex;
   flex-direction: column;
-  justify-content: start;
   gap: 0.5rem;
   width: 100%;
   max-width: 400px;
@@ -119,7 +132,7 @@ export default {
 }
 
 .toggle__btn:focus {
-  outline: 2px solid #55a7ff;
+  outline: 2px solid #007bff;
 }
 
 .error__message {
