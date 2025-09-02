@@ -3,6 +3,7 @@
 @import './components/container.css';
 @import './base.css';
 @import './components/Forms.css';
+@import './Base/typography.css';
 
 * {
     margin: 0;

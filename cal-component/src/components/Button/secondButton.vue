@@ -6,35 +6,34 @@
 
 <script>
 export default {
-
     props:{
         label:{
             type:String,
-            default:'inscription'
+            default:'suivant'
         }
     }
-
 }
 </script>
 
 <style scoped>
 button {
-    background: #2f80edff;
+    background: #dddddd;
     padding: 0.5rem;
     border: none;
     border-radius: 4px;
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
+    color: #111111;
+    font-size: 0.9rem;
+    font-weight: 600;
     width:100%;
     max-width:400px;
-    transition: 0.7s ease-in-out;
+    transition: 0.3s ease-in-out;
     cursor:pointer;
 }
 
 button:hover{
-    border-radius: 1rem;
-    transition: 0.5s ease-in;
-    background: rgb(29, 81, 148);
+    border-radius: 0.5rem;
+    transition: 0.2s ease-in;
+    background: rgb(107, 107, 107);
+    color: white;
 }
 </style>

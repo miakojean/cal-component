@@ -1,7 +1,7 @@
 <template> 
   <main>
     <div class="main__container">
-      <loginForm/>
+      <registrationForm/>
     </div>
   </main>
 </template>
@@ -9,13 +9,17 @@
 <script>
 import mainButton from './components/mainButton.vue';
 import loginForm from './components/loginForm.vue';
+import registrationForm from './components/form/registrationForm.vue';
+import timeLines from './components/form/timeLines.vue';
 export default {
 
   name: 'App',
 
   components:{
     mainButton, 
-    loginForm
+    loginForm,
+    registrationForm,
+    timeLines
   },
 
   setup() {

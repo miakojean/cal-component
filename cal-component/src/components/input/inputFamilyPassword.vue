@@ -34,7 +34,7 @@ export default {
   props: {
     modelValue: {
       type: String,
-      required: true
+      default:""
     },
     placeholder: {
       type: String,
@@ -129,10 +129,6 @@ export default {
   padding: 0;
   font-size: 1.2rem;
   color: #555;
-}
-
-.toggle__btn:focus {
-  outline: 2px solid #007bff;
 }
 
 .error__message {

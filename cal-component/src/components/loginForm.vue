@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import inputFamily from './inputFamily.vue';
-import inputFamilyPassword from './inputFamilyPassword.vue';
-import checkboxFamily from './checkboxFamily.vue';
+import inputFamily from './input/inputFamily.vue';
+import inputFamilyPassword from './input/inputFamilyPassword.vue';
+import checkboxFamily from './input/checkboxFamily.vue';
 import mainButton from './mainButton.vue';
 import { ref, reactive } from 'vue';
 

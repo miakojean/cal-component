@@ -9,13 +9,13 @@ main {
 .main__container {
     /* Donnez une taille fixe à l'élément pour qu'il soit visiblement centré */
     width: 100%;
+    max-width: 1280px;
     height: 100%;
     color: white;
     text-align: center;
     /* Les autres propriétés Flexbox ici ne sont nécessaires que si vous avez des éléments à centrer à l'intérieur de main__container */
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     gap: 2rem;
 }

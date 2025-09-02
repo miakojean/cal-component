@@ -1,14 +1,14 @@
 <template>
   <div class="input__family">
-    <label :for="inputId">Email ou username</label>
+    <label :for="inputId">{{ inputId }}</label>
     <div class="input__password"
-        :class="{
-            'input-filled': fieldInfo !=='',
-            'input-error': showError
-        }"
+      :class="{
+        'input-filled': fieldInfo !=='',
+        'input-error': showError
+      }"
     >
       <input
-        type="text"
+        :type="type"
         :id="inputId"
         :placeholder="placeholder"
         v-model="fieldInfo"
@@ -26,7 +26,7 @@ export default {
   props: {
     modelValue: {
       type: String,
-      required: true
+      default:""
     },
     placeholder: {
       type: String,
@@ -43,6 +43,10 @@ export default {
     showValidation: {
       type: Boolean,
       default: false
+    },
+    type:{
+      type:String,
+      default: 'text'
     }
   },
   emits: ['update:modelValue', 'blur'],
@@ -103,7 +107,6 @@ export default {
 }
 
 .input__password input:focus {
-  border: 1px solid #007BFF;
   transition: ease-in 0.3s;
 }
 
