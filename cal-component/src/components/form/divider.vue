@@ -11,14 +11,11 @@
   </div>
 </template>
 
-<script setup>
-// Ce composant accepte une propriété "title" pour afficher le texte du séparateur
-defineProps({
-  title: {
-    type: String,
-    default: 'ou'
-  }
-});
+<script>
+export default{
+  name:"divider"
+
+}
 </script>
 
 <style scoped>

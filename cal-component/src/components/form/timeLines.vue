@@ -1,107 +1,151 @@
 <template>
   <div class="timeline-container">
-    <h2>🕒 Timeline d'enregistrement</h2>
-    <ul class="timeline">
-      <li v-for="(step, index) in registrationSteps" :key="index" :class="{ completed: step.completed }">
-        <div class="step-indicator">{{ index + 1 }}</div>
-        <div class="step-content">
-          <h3>{{ step.title }}</h3>
-          <p>{{ step.description }}</p>
-          <span v-if="step.timestamp" class="timestamp">📅 {{ formatDate(step.timestamp) }}</span>
+    <ul>
+      <li v-for="item in steps" :key="item.id" :class="getStepClass(item.id)">
+        <div class="step-circle">{{ item.id }}</div>
+        <div class="step-title">
+          <h4>{{ item.title }}</h4>
+          <p>{{ item.subtitle }}</p>
         </div>
       </li>
     </ul>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script lang="ts">
+import { defineComponent, computed } from 'vue';
 
-const registrationSteps = ref([
-  {
-    title: 'Création du compte',
-    description: 'L\'utilisateur a soumis le formulaire d’inscription.',
-    completed: true,
-    timestamp: '2025-09-01T20:45:00Z',
-  },
-  {
-    title: 'Validation email',
-    description: 'L’utilisateur a confirmé son adresse email.',
-    completed: true,
-    timestamp: '2025-09-01T20:50:00Z',
-  },
-  {
-    title: 'Profil complété',
-    description: 'Les informations personnelles ont été ajoutées.',
-    completed: false,
-    timestamp: null,
-  },
-  {
-    title: 'Affectation à une école',
-    description: 'L’utilisateur est lié à un tenant spécifique.',
-    completed: false,
-    timestamp: null,
-  },
-])
-
-function formatDate(dateStr) {
-  const date = new Date(dateStr)
-  return date.toLocaleString('fr-FR', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
+interface Step {
+  id: number;
+  title: string;
+  subtitle: string;
 }
+
+export default defineComponent({
+  name: 'RegistrationTimeline',
+  props: {
+    currentStep: {
+      type: Number,
+      required: true
+    }
+  },
+  setup(props) {
+    const steps: Step[] = [
+      { id: 1, title: 'Étape 1', subtitle: 'Infos Personnelles' },
+      { id: 2, title: 'Étape 2', subtitle: 'Coordonnées' },
+      { id: 3, title: 'Étape 3', subtitle: 'Sécurité du compte' }
+    ];
+
+    const getStepClass = (stepId: number): string => {
+      if (stepId < props.currentStep) {
+        return 'timeline-step active completed';
+      }
+      if (stepId === props.currentStep) {
+        return 'timeline-step active';
+      }
+      return 'timeline-step'; // Upcoming step
+    };
+
+    return {
+      steps,
+      getStepClass
+    };
+  }
+});
 </script>
 
 <style scoped>
 .timeline-container {
-  max-width: 600px;
-  margin: auto;
-  font-family: 'Segoe UI', sans-serif;
+  width: 300px;
+  padding: 2rem;
+  border-right: 1px solid #e0e0e0;
 }
 
-.timeline {
-  list-style: none;
+.timeline-container ul {
+  list-style-type: none;
   padding: 0;
-  margin: 0;
+  position: relative;
 }
 
-.timeline li {
+/* Vertical connecting line */
+.timeline-container ul::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 2px;
+  height: calc(100% - 30px);
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.timeline-step {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   position: relative;
-  padding-left: 40px;
+  z-index: 2;
 }
 
-.step-indicator {
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: #ccc;
-  color: white;
+.step-circle {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  text-align: center;
-  line-height: 28px;
+  background-color: #f0f0f0;
+  color: #888;
+  border: 2px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin-right: 1rem;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.step-title h4, .step-title p {
+  margin: 0;
+  color: #888;
+  transition: color 0.3s;
+  text-align: start;
+}
+
+.step-title h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.step-title p {
+  font-size: 0.9rem;
+}
+
+/* Active State */
+.timeline-step.active .step-circle {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.timeline-step.active .step-title h4,
+.timeline-step.active .step-title p {
+  color: #000;
   font-weight: bold;
 }
 
-.completed .step-indicator {
-  background-color: #4caf50;
+/* Completed State */
+
+.timeline-step.completed .step-title h4,
+.timeline-step.completed .step-title p {
+  color: #333;
 }
 
-.step-content h3 {
-  margin: 0;
-  font-size: 1.1em;
+/* Checkmark for completed steps */
+.timeline-step.completed .step-circle::after {
+  content: '✔';
+  font-size: 1.2rem;
+  color: #fff;
 }
 
-.timestamp {
-  font-size: 0.85em;
-  color: #666;
+.timeline-step.completed .step-circle {
+  font-size: 0; /* Hide number when checkmark is shown */
 }
 </style>

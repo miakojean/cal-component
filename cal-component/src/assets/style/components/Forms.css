@@ -1,3 +1,7 @@
+.main__form{
+    display: flex;
+}
+
 form{
     width: 100%;
     max-width: 400px;
@@ -77,4 +81,9 @@ input:focus{
     text-align: start;
     line-height: 1.5;
     font-weight: 400;
+}
+
+.conditions:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }
