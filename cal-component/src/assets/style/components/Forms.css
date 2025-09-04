@@ -71,6 +71,7 @@ input:focus{
 .error__message{
     color: red;
     font-size: 0.9rem;
+    font-weight: 600;
     width:100%;
     text-align: left;
 }

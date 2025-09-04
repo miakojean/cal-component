@@ -3,7 +3,7 @@
         <timeLines :currentStep="step"/>
         <form action="" class="regis__form" v-if="step === 1">
             <h4>Inscription</h4>
-            <p class="errorMessages" v-if="message.errorMessages">
+            <p class="error__message" v-if="message.errorMessages">
                 {{ message.errorMessages }}
             </p>
             <inputFamily v-for="(steps, index) in firstStep"
@@ -24,7 +24,7 @@
 
         <form action="" class="regis__form" v-if="step === 2">
             <h4>Inscription</h4>
-            <p class="errorMessages" v-if="message.errorMessages">
+            <p class="error__message" v-if="message.errorMessages">
                 {{ message.errorMessages }}
             </p>
             <inputFamily v-for="(steps, index) in secondStep"
@@ -46,7 +46,7 @@
 
         <form action="" class="regis__form" v-if="step === 3">
             <h4>Inscription</h4>
-            <p class="errorMessages" v-if="message.errorMessages">
+            <p class="error__message" v-if="message.errorMessages">
                 {{ message.errorMessages }}
             </p>
             <inputFamilyPassword v-for="(steps, index) in password"
