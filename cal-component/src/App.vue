@@ -1,8 +1,6 @@
 <template> 
   <main>
-    <div class="main__container">
-      <registrationForm/>
-    </div>
+    <sidebar/>
   </main>
 </template>
 
@@ -10,7 +8,8 @@
 import mainButton from './components/mainButton.vue';
 import loginForm from './components/loginForm.vue';
 import registrationForm from './components/form/registrationForm.vue';
-import timeLines from './components/form/timeLines.vue';
+import sidebar from './components/dashboard/sidebar.vue';
+
 export default {
 
   name: 'App',
@@ -19,7 +18,7 @@ export default {
     mainButton, 
     loginForm,
     registrationForm,
-    timeLines
+    sidebar
   },
 
   setup() {

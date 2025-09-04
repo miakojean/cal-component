@@ -1,3 +1,11 @@
+*{
+    color: black;
+}
+
+h1, h2, h3 {
+    color: black;
+}
+
 h4{
     font-size: 1.2rem;
     font-weight: 600;
@@ -9,4 +17,10 @@ p{
     color: black;
     text-align: start;
     line-height: 1.5;
+}
+
+li{
+    list-style: none;
+    width: 100%;
+    text-align: left;
 }
