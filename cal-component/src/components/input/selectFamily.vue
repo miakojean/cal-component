@@ -1,21 +1,21 @@
 <template>
-    <div class="input__family">
-      <label :for="label">{{ label }}</label>
-      <select 
-        :id="label"
-        v-model="inputValue"
-        @change="updateValue"
+  <div class="input__family">
+    <label :for="label">{{ label }}</label>
+    <select 
+      :id="label"
+      v-model="inputValue"
+      @change="updateValue"
+    >
+      <option value="">Votre poste</option>
+      <option 
+        v-for="(item, index) in options" 
+        :key="index" 
+        :value="item"
       >
-        <option value="">Votre poste</option>
-        <option 
-          v-for="(item, index) in options" 
-          :key="index" 
-          :value="item"
-        >
-          {{ item }}
-        </option>
-      </select>
-    </div>
+        {{ item }}
+      </option>
+    </select>
+  </div>
 </template>
   
 <script>
@@ -59,5 +59,13 @@
 </script>
   
 <style scoped>
+.input__family {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
 
 </style>

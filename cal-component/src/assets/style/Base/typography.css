@@ -7,20 +7,31 @@ h1, h2, h3 {
 }
 
 h4{
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: black;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #414142;
 }
 
 p{
     font-size: 0.9rem;
-    color: black;
+    color: #414142;
     text-align: start;
     line-height: 1.5;
+    font-weight: 400;
 }
 
 li{
     list-style: none;
     width: 100%;
     text-align: left;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    color: #535353;
+}
+
+i{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--primary-color);
 }

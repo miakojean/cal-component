@@ -1,67 +1,53 @@
 <template>
         
-    <div class="dashboard__main">
-        <aside :class="['sidebar', { collapsed }]" aria-label="Sidebar">
-            <div class="brand">
-                
-            </div>
+  <div class="dashboard__main">
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="brand">
+          
+      </div>
 
-            <nav class="nav">
+      <nav class="nav">
 
-                <div class="my__school">
-                    <h4>
-                        CalSchool Dashboard
-                    </h4>
-                </div>
-                
-                <ul class="list__frame">
-                    <li class="list__items">
-                        <i class="ri-dashboard-line"></i> 
-                        Dashboard
-                    </li>
-                    <li class="list__items">
-                        <i class="ri-bank-line"></i> 
-                        Classes
-                    </li>
-                    <li class="list__items">
-                        <i class="ri-team-line"></i> 
-                        Étudiants
-                    </li>
-                    <li class="list__items">
-                        <i class="ri-money-dollar-circle-line"></i> 
-                        Frais de scolarité
-                    </li>
-                    <li class="list__items">
-                        <i class="ri-bar-chart-2-line"></i> 
-                        Comptabilité
-                    </li>
-                </ul>
+        <div class="my__school">
+          <h4>
+            CalSchool Dashboard
+          </h4>
+        </div>
 
-                <div class="my__school">
-                    <h4>
-                        CalSchool Dashboard
-                    </h4>
-                </div>
-            </nav>
+        <div class="my__school">
+        <h4 class="bar__title">
+          Mes écoles
+          <i class="ri-add-line"></i>
+        </h4>
+        <p>Aucune école enregistrée</p>
 
-            <div class="sidebar-footer" v-if="!collapsed">
-                <small>Version 1.0</small>
-            </div>
-        </aside>
-    </div>
-    
+      </div>
 
+        <div class="my__school">
+          <h4>
+            Paramètres 
+          </h4>
+        </div>
+      </nav>
+
+        <div class="sidebar-footer">
+          <small>Version 1.0</small>
+        </div>
+    </aside>
+  </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script lang="ts">
+import frame from '../items/frame.vue';
 
-const collapsed = ref(false)
-const items = ['Tableau de bord', 'Utilisateurs', 'Transactions', 'Paramètres']
-
-function toggle() {
-  collapsed.value = !collapsed.value
-}
+export default {
+  components: {
+    frame,
+  },
+  setup() {
+    return {};
+  },
+};
 </script>
 
 <style scoped>
@@ -69,15 +55,14 @@ function toggle() {
 *{box-sizing:border-box}
 
 .dashboard__main{
-    display: flex;
-    justify-content: start;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  justify-content: start;
+  width: 280px;
+  height: 100%;
 }
 
 .sidebar{
   width: 280px;
-  background:linear-gradient(180deg, var(--white), #fbfbff);
   border-right:1px solid #ececf7;
   padding:16px;
   display:flex;
@@ -87,9 +72,36 @@ function toggle() {
   transition:width 180ms ease;
 }
 
+.bar__title{
+  display: flex;
+  justify-content: space-between;
+  color: #414142;
+  padding: 0.5rem;
+  border: 1px solid #adadad;
+  border-radius: 1.5rem;
+  cursor: pointer;
+}
+
+.bar__title:hover{
+  color: #414142;
+  padding: 0.5rem;
+  border: 1px solid #868686;
+  border-radius: 1.5rem;
+  cursor: pointer;
+}
+
 .sidebar.collapsed{
   width:72px;
 }
+
+.my__school{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 2rem;
+}
+
+
 
 .nav{
   display:flex;
@@ -98,49 +110,6 @@ function toggle() {
   width: 100%;
   height: 100%;
   gap: 1rem;
-}
-
-.list__frame{
-  display:flex;
-  justify-content: start;
-  flex-direction: column;
-  gap:0.5rem;
-  border:none;
-  background:transparent;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-  text-align:left;
-  width: 100%;
-}
-
-.list__items {
-  position: relative;
-  display: flex;
-  gap: 1rem;
-  padding: 0.8rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
-}
-
-/* Soulignement animé */
-.list__items::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0.2rem; /* ajuste la distance du texte */
-  width: 100%;
-  height: 2px;
-  background-color: #5c48ee; /* ta couleur primaire */
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Hover → underline apparaît de gauche à droite */
-.list__items:hover::after {
-  transform: scaleX(1);
 }
 
 

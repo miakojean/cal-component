@@ -1,13 +1,14 @@
 <template> 
   <main>
     <sidebar/>
+    <schoolRegistrationForm/>
   </main>
 </template>
 
 <script>
 import mainButton from './components/mainButton.vue';
 import loginForm from './components/loginForm.vue';
-import registrationForm from './components/form/registrationForm.vue';
+import schoolRegistrationForm from './components/form/schoolRegistrationForm.vue';
 import sidebar from './components/dashboard/sidebar.vue';
 
 export default {
@@ -17,7 +18,7 @@ export default {
   components:{
     mainButton, 
     loginForm,
-    registrationForm,
+    schoolRegistrationForm,
     sidebar
   },
 

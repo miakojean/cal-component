@@ -3,14 +3,13 @@ main {
     height: 100vh; /* Utilisez 100vh pour que le conteneur prenne toute la hauteur de la fenêtre */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     padding: 0.5rem;
 }
 
 .main__container {
     /* Donnez une taille fixe à l'élément pour qu'il soit visiblement centré */
     width: 100%;
-    max-width: 1280px;
     height: 100%;
     color: white;
     text-align: center;
@@ -19,4 +18,5 @@ main {
     align-items: center;
     justify-content: space-around;
     gap: 2rem;
+    padding: 1rem;
 }
