@@ -27,6 +27,9 @@
           <h4>
             Paramètres 
           </h4>
+          <ul>
+            <li>Mon plan</li>
+          </ul>
         </div>
       </nav>
 

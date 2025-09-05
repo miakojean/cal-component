@@ -6,7 +6,6 @@
       v-model="inputValue"
       @change="updateValue"
     >
-      <option value="">Votre poste</option>
       <option 
         v-for="(item, index) in options" 
         :key="index" 
@@ -67,5 +66,4 @@
   width: 100%;
   max-width: 400px;
 }
-
 </style>
