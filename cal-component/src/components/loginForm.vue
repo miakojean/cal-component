@@ -2,16 +2,20 @@
   <form @submit.prevent="handleSubmit">
     <h3 class="form__libele">Connexion</h3>
     <p class="form__details">Entrer vos identifiants pour vous connecter</p>
-    <inputFamily
-      v-model="userCredentials.username"
+    
+    <input-family
+      input-id="Email"
+      v-model="userCredentials.email"
       :show-validation="showValidation"
-      error-message="Veuillez saisir votre email ou nom d'utilisateur"
-      @blur="markFieldTouched('username')"
+      :is-touched="touchedFields.email"
+      error-message="Veuillez saisir votre email"
+      @blur="markFieldTouched('email')"
     />
     
     <input-family-password
       v-model="userCredentials.password"
       :show-validation="showValidation"
+      :is-touched="touchedFields.password"
       error-message="Veuillez saisir votre mot de passe"
       @blur="markFieldTouched('password')"
     />
@@ -27,23 +31,24 @@
 </template>
 
 <script>
-import inputFamily from './input/inputFamily.vue';
-import inputFamilyPassword from './input/inputFamilyPassword.vue';
-import checkboxFamily from './input/checkboxFamily.vue';
-import mainButton from './mainButton.vue';
+import InputFamily from './input/inputFamily.vue';
+import InputFamilyPassword from './input/inputFamilyPassword.vue';
+import CheckboxFamily from './input/checkboxFamily.vue';
+import MainButton from './mainButton.vue';
 import { ref, reactive } from 'vue';
+import api from '@/_services/authservices';
 
 export default {
   components: {
-    inputFamily,
-    inputFamilyPassword,
-    checkboxFamily,
-    mainButton
+    InputFamily,
+    InputFamilyPassword,
+    CheckboxFamily,
+    MainButton
   },
 
   setup() {
     const userCredentials = reactive({
-      username: "",
+      email: "",
       password: ""
     });
     
@@ -52,24 +57,33 @@ export default {
     const isSubmitting = ref(false);
     const submitError = ref("");
     const touchedFields = reactive({
-      username: false,
+      email: false,
       password: false
     });
 
     const validateForm = () => {
       const errors = [];
       
-      if (!userCredentials.username.trim()) {
-        errors.push("Le nom d'utilisateur est requis");
+      if (!userCredentials.email.trim()) {
+        errors.push("email");
       }
       
       if (!userCredentials.password) {
-        errors.push("Le mot de passe est requis");
+        errors.push("password");
       } else if (userCredentials.password.length < 6) {
-        errors.push("Le mot de passe doit contenir au moins 6 caractères");
+        errors.push("password_length");
       }
       
       return errors;
+    };
+
+    const getErrorMessage = (errorType) => {
+      const messages = {
+        email: "L'email est requis",
+        password: "Le mot de passe est requis",
+        password_length: "Le mot de passe doit contenir au moins 6 caractères"
+      };
+      return messages[errorType] || "Erreur de validation";
     };
 
     const markFieldTouched = (fieldName) => {
@@ -80,30 +94,48 @@ export default {
       showValidation.value = true;
       submitError.value = "";
       
+      // Marquer tous les champs comme touchés
+      touchedFields.email = true;
+      touchedFields.password = true;
+      
       const errors = validateForm();
       
       if (errors.length > 0) {
-        submitError.value = errors.join(". ");
+        submitError.value = errors.map(error => getErrorMessage(error)).join(". ");
         return;
       }
       
       isSubmitting.value = true;
       
       try {
-        // Simuler un appel API
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        const response = await api.post('/account/login', {
+          email: userCredentials.email,
+          password: userCredentials.password
+        });
         
-        // Ici, vous appelleriez normalement votre API d'authentification
-        console.log("Tentative de connexion avec:", userCredentials);
+        console.log("Connexion réussie:", response.data);
         
-        // Réinitialiser le formulaire après soumission réussie
-        userCredentials.username = "";
-        userCredentials.password = "";
-        showValidation.value = false;
+        if (response.data.access_token || response.data.access) {
+          const token = response.data.access_token || response.data.access;
+          localStorage.setItem('authToken', token);
+          
+          userCredentials.email = "";
+          userCredentials.password = "";
+          showValidation.value = false;
+        } else {
+          throw new Error("Token non reçu dans la réponse");
+        }
         
-        // Émettre un événement ou rediriger l'utilisateur
       } catch (error) {
-        submitError.value = "Échec de la connexion. Veuillez réessayer.";
+        console.error("Erreur de connexion:", error);
+        
+        if (error.response?.status === 401) {
+          submitError.value = "Email ou mot de passe incorrect";
+        } else if (error.response?.data?.message) {
+          submitError.value = error.response.data.message;
+        } else {
+          submitError.value = "Échec de la connexion. Veuillez réessayer.";
+        }
       } finally {
         isSubmitting.value = false;
       }
@@ -115,6 +147,7 @@ export default {
       showValidation,
       isSubmitting,
       submitError,
+      touchedFields,
       handleSubmit,
       markFieldTouched
     };

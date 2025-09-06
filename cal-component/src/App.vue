@@ -1,7 +1,6 @@
 <template> 
   <main>
-    <sidebar/>
-    <schoolRegistrationForm/>
+    <loginForm/>
   </main>
 </template>
 

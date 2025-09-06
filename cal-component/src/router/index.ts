@@ -7,6 +7,11 @@ const router = createRouter({
       path:'/',
       name:'index',
       component: () => import('@/App.vue')
+    },
+    {
+      path:'/login',
+      name:'login',
+      component: ()=> import('@/components/loginForm.vue')
     }
   ],
 })
