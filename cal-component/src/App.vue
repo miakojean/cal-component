@@ -1,12 +1,12 @@
 <template> 
   <main>
-    <loginForm/>
+    <router-view/>
   </main>
 </template>
 
 <script>
 import mainButton from './components/mainButton.vue';
-import loginForm from './components/loginForm.vue';
+import loginForm from './views/login.vue';
 import schoolRegistrationForm from './components/form/schoolRegistrationForm.vue';
 import sidebar from './components/dashboard/sidebar.vue';
 

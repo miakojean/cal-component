@@ -13,6 +13,11 @@
             placeholder="Entrer le type d'établissement"
             :options ="schoolCategory"
         />
+        <inputFamily 
+            input-id="Adresse"
+            placeholder="Entrer l'adresse de votre école"
+            v-model="payload.schoolAdress"
+        />
     </div>
 
     <div class="fields">
@@ -26,11 +31,16 @@
             placeholder="Entrer le type d'établissement"
             v-model="payload.schoolPhoneNumber"
         />
+        <inputFamily 
+            input-id="Email"
+            placeholder="Entrer l'adresse email de votre école"
+            v-model="payload.schoolEmail"
+        />
     </div>
 
     <div class="fields">
         <inputFamily 
-            input-id="Email"
+            input-id="Site web"
             placeholder="Entrer l'adresse email de votre école"
             v-model="payload.schoolEmail"
         />
@@ -39,8 +49,21 @@
             placeholder="Entrer le site internet de l'école"
             v-model="payload.schoolWebsite"
         />
+        <textArea
+            label="Description"
+            input-id="Description"
+            placeholder="Entrer la description de votre école"
+            v-model="payload.schoolDescription"
+        />
     </div>
-    <mainButton @click="submit"/>
+    <div class="btn__frame">
+        <secondButton @click="goBack"
+            label="Retour"
+        />
+        <mainButton @click="submit"
+            label="Ajouter"
+        />
+    </div>
   </div>
 </template>
 
@@ -48,7 +71,10 @@
 import inputFamily from '../input/inputFamily.vue';
 import selectFamily from '../input/selectFamily.vue';
 import mainButton from '../mainButton.vue';
+import secondButton from '../Button/secondButton.vue';
+import textArea from '../input/textArea.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { validateStep } from './validation';
 
 interface FormField{
@@ -68,10 +94,14 @@ export default {
     components:{
         inputFamily,
         selectFamily,
-        mainButton
+        mainButton,
+        textArea,
+        secondButton
     },
 
     setup(){
+
+        const router = useRouter();
 
         const schoolCategory = [
             "Crêche","Maternelle", "Primaire", 
@@ -86,7 +116,8 @@ export default {
             schoolAdress:"",
             schoolPhoneNumber:"",
             schoolEmail:"",
-            schoolWebsite:""
+            schoolWebsite:"",
+            schoolDescription:""
         })
 
         
@@ -95,7 +126,11 @@ export default {
             console.log(payload.value)
         }
 
-        return{schoolCategory, payload, submit}
+        const goBack = () => {
+            router.push('/dashboard');
+        }
+
+        return{schoolCategory, payload, submit, goBack}
     }
 
 }
@@ -114,6 +149,13 @@ export default {
     width: 100%;
     display: flex;
     justify-content: start;
+    gap: 1rem;
+}
+
+.btn__frame{
+    width: 100%;
+    display: flex;
+    justify-content: end;
     gap: 1rem;
 }
 </style>
