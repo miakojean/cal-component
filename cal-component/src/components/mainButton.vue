@@ -27,7 +27,7 @@ button {
     font-size: 1rem;
     font-weight: 500;
     width:100%;
-    max-width:300px;
+    max-width:400px;
     transition: 0.7s ease-in-out;
     cursor:pointer;
 }

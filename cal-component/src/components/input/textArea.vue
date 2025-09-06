@@ -4,6 +4,7 @@
     <textarea :id="label" 
     v-model="inputValue" 
     :placeholder="placeholder"
+    rows="4"
     @change="updateValue"></textarea>
   </div>
 </template>
