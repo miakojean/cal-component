@@ -12,7 +12,8 @@
       @blur="markFieldTouched('email')"
     />
     
-    <input-family-password
+    <input-family-password 
+      inputId="Mot de passe"
       v-model="userCredentials.password"
       :show-validation="showValidation"
       :is-touched="touchedFields.password"

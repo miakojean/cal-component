@@ -12,7 +12,7 @@
         :id="inputId"
         :placeholder="placeholder"
         v-model="password"
-        @blur="handleBlur"
+        @blur="handleBlur" 
       />
       <button
         type="button"

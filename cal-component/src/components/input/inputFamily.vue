@@ -4,7 +4,7 @@
     <div class="input__password"
       :class="{
         'input-filled': fieldInfo !=='',
-        'error__message': showError
+        'input-error': showError
       }"
     >
       <input
@@ -123,6 +123,14 @@ export default {
 
 .toggle__btn:focus {
   outline: 2px solid #55a7ff;
+}
+
+.error__message {
+  color: crimson;
+  font-size: 0.85rem;
+  width: 100%;
+  text-align: left;
+  margin: 0;
 }
 
 .input-error input {
