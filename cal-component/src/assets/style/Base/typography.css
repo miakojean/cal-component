@@ -12,7 +12,7 @@ h4{
     color: #414142;
 }
 
-p{
+p, th, tr, td{
     font-size: 0.9rem;
     color: #414142;
     text-align: start;

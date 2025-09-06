@@ -38,6 +38,7 @@ import CheckboxFamily from './input/checkboxFamily.vue';
 import MainButton from './mainButton.vue';
 import { ref, reactive } from 'vue';
 import api from '@/_services/authservices';
+import { useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -52,6 +53,8 @@ export default {
       email: "",
       password: ""
     });
+
+    const router = useRouter()
     
     const rememberMe = ref(false);
     const showValidation = ref(false);
@@ -123,6 +126,7 @@ export default {
           userCredentials.email = "";
           userCredentials.password = "";
           showValidation.value = false;
+          router.push('/dashboard')
         } else {
           throw new Error("Token non reçu dans la réponse");
         }
@@ -144,6 +148,7 @@ export default {
 
     return {
       userCredentials,
+      router,
       rememberMe,
       showValidation,
       isSubmitting,
