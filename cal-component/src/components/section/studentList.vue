@@ -2,7 +2,7 @@
   <div class="student__list">
     <div class="header__list">
       <h4>Liste des étudiants de la classe</h4>
-      <p>Ajouter un élève</p>
+      <p class="add__students">Ajouter un élève</p>
     </div>
     <div class="table-container">
     <table>
@@ -133,7 +133,7 @@ export default {
 
 <style scoped>
 .table-container {
-  max-height: 400px; /* <-- Définissez ici la hauteur maximale que vous souhaitez */
+  max-height: 500px; /* <-- Définissez ici la hauteur maximale que vous souhaitez */
   overflow-y: auto;  /* <-- Affiche une barre de défilement verticale si le contenu dépasse la hauteur */
 }
 
@@ -183,5 +183,15 @@ thead th {
   flex-direction: column;
   justify-content: start;
   gap: 1rem;
+}
+
+.add__students{
+  cursor: pointer;
+   transition: 0.3 ease-in;
+}
+
+.add__students:hover{
+  text-decoration: underline;
+  transition: 0.5 ease-in;
 }
 </style>
