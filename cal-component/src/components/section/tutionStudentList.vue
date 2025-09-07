@@ -1,7 +1,7 @@
 <template>
   <div class="student__list">
     <div class="header__list">
-      <h4>Liste des étudiants de la classe</h4>
+      <h4>Liste des étudiants de la classe scolarité</h4>
       <div class="classe__tuition">
         <p class="nav__items" :class="{ active: activeTab === 'classes' }" @click="setActiveTab('classes')">
           Classes
@@ -19,10 +19,13 @@
             <th>N°</th>
             <th>Nom</th>
             <th>Prénoms</th>
-            <th>Genre</th>
-            <th>Date de naissance</th>
-            <th>Date d'ajout</th>
-            <th>Actions</th>
+            <th>1er versement</th>
+            <th>2e versement</th>
+            <th>3e versement</th>
+            <th>4e versement</th>
+            <th>5e versement</th>
+            <th>Statut</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -43,13 +46,22 @@
             <td v-if="!isEditing">{{ student.prenoms }}</td>
             <td v-else><research-box /></td>
             
-            <td v-if="!isEditing">{{ student.genre }}</td>
+            <td v-if="!isEditing">{{ student.firstInstallment }}</td>
             <td v-else><research-box /></td>
             
-            <td v-if="!isEditing">{{ student.dateDeNaissance }}</td>
+            <td v-if="!isEditing">{{ student.secondInstallment }}</td>
             <td v-else><research-box /></td>
             
-            <td v-if="!isEditing">{{ student.dateAjout }}</td>
+            <td v-if="!isEditing">{{ student.thirdInstallment }}</td>
+            <td v-else><research-box /></td>
+
+            <td v-if="!isEditing">{{ student.fourthInstallment }}</td>
+            <td v-else><research-box /></td>
+
+            <td v-if="!isEditing">{{ student.fifthInstallment }}</td>
+            <td v-else><research-box /></td>
+
+            <td v-if="!isEditing">{{ student.status }}</td>
             <td v-else><research-box /></td>
 
             <td class="actions">
@@ -73,10 +85,12 @@ export interface Student {
   id: number | string;
   nom: string;
   prenoms: string;
-  genre: string;
-  dateDeNaissance: string;
-  dateAjout: string;
-  nomParent: string;
+  firstInstallment: number;
+  secondInstallment: number;
+  thirdInstallment: number;
+  fourthInstallment: number;
+  fifthInstallment: number;
+  status: string;
 }
 
 export default defineComponent({
@@ -94,19 +108,23 @@ export default defineComponent({
           id: 1,
           nom: "LOKOU", 
           prenoms: "Gaelle", 
-          genre: "féminin", 
-          dateDeNaissance: "12/09/1999",
-          dateAjout: "",
-          nomParent: ""
+          firstInstallment: 10000, 
+          secondInstallment: 0,
+          thirdInstallment: 0,
+          fourthInstallment: 0,
+          fifthInstallment: 0,
+          status: "Active"
         },
         { 
           id: 2,
           nom: "PANAN", 
           prenoms: "Jennifer Amélie", 
-          genre: "féminin", 
-          dateDeNaissance: "12/09/1999",
-          dateAjout: "",
-          nomParent: ""
+          firstInstallment: 10000, 
+          secondInstallment: 0,
+          thirdInstallment: 0,
+          fourthInstallment: 0,
+          fifthInstallment: 0,
+          status: "Active"
         },
       ]
     }
@@ -116,12 +134,12 @@ export default defineComponent({
   setup(props, { emit }) {
     const isEditing = ref(false);
     const checkedStudents = ref<boolean[]>([]);
-    const activeTab = ref('classes');
+    const activeTab = ref('scolarite');
     const router = useRouter();
 
     const setActiveTab = (tab: string) => {
       activeTab.value = tab;
-      router.push(`/dashboard/tuition`)
+      router.push(`/dashboard`)
     };
 
     // Initialiser le tableau des checkboxes

@@ -5,6 +5,7 @@
 @import './base.css';
 @import './components/Forms.css';
 @import './Base/typography.css';
+@import './components/table.css';
 
 * {
     margin: 0;

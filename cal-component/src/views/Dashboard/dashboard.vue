@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import sidebar from '../components/dashboard/sidebar.vue';
-import studentList from '../components/section/studentList.vue';
+import sidebar from '../../components/dashboard/sidebar.vue';
+import studentList from '../../components/section/studentList.vue';
 import navbar from '@/components/nav/navbar.vue';
 import dashboardTools from '@/components/dashboard/dashboardTools.vue';
 

@@ -1,0 +1,28 @@
+table{
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border-collapse: collapse;
+}
+th, td{
+  padding: 0.8rem;
+  text-align: left;
+}
+tr{
+  transition: 0.5s;
+  cursor: pointer;
+}
+tr:hover{
+  background: #f1f1f1;
+  transition: 0.3s ease-in;
+}
+thead{
+  background: #e6e4e4;
+  border-radius: 0.5rem;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  background: #e6e4e4; 
+  z-index: 1;
+}

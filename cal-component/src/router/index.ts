@@ -18,15 +18,24 @@ const router = createRouter({
       name:'registration',
       component: () => import('@/views/registration.vue')
     },
+    
+    // This about the dashboard
     {
       path:'/dashboard',
       name:'dashboard',
-      component: () => import('@/views/dashboard.vue')
+      component: () => import('@/views/Dashboard/dashboard.vue')
     },
+
+    {
+      path:'/dashboard/tuition',
+      name:'tuition-dashboard',
+      component: () => import('@/views/Dashboard/tuitionDashboard.vue')
+    },
+    
     {
       path:'/student-registration',
       name:'student-registration',
-      component: () => import('@/views/dashboard.vue')
+      component: () => import('@/views/Dashboard/dashboard.vue')
     }
   ],
 })
