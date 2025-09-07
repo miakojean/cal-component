@@ -23,7 +23,13 @@ const router = createRouter({
     {
       path:'/dashboard',
       name:'dashboard',
-      component: () => import('@/views/Dashboard/dashboard.vue')
+      component: () => import('@/views/Dashboard/dashBoardIndex.vue')
+    },
+
+    {
+      path:'/school-registration',
+      name:'school-registration',
+      component: () => import('@/views/Dashboard/schoolRegistration.vue')
     },
 
     {

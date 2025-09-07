@@ -71,7 +71,7 @@ import { validateStep, Step1Data, Step2Data, Step3Data, ValidationResult } from 
 import selectFamily from '../input/selectFamily.vue';
 import inputFamily from '../input/inputFamily.vue';
 import inputFamilyPassword from '../input/inputFamilyPassword.vue';
-import mainButton from '../mainButton.vue';
+import mainButton from '../Button/mainButton.vue';
 import divider from './divider.vue';
 import secondButton from '../Button/secondButton.vue';
 import timeLines from './timeLines.vue';

@@ -59,9 +59,11 @@
     <div class="btn__frame">
         <secondButton @click="goBack"
             label="Retour"
+            maxWidth="200px"
         />
         <mainButton @click="submit"
-            label="Ajouter"
+            label="Ajouter mon école"
+            maxWidth="200px"
         />
     </div>
   </div>
@@ -70,12 +72,11 @@
 <script lang="ts">
 import inputFamily from '../input/inputFamily.vue';
 import selectFamily from '../input/selectFamily.vue';
-import mainButton from '../mainButton.vue';
+import mainButton from '../Button/mainButton.vue';
 import secondButton from '../Button/secondButton.vue';
 import textArea from '../input/textArea.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { validateStep } from './validation';
 
 interface FormField{
     inputId: string;

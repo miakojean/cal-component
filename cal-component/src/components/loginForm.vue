@@ -35,7 +35,7 @@
 import InputFamily from './input/inputFamily.vue';
 import InputFamilyPassword from './input/inputFamilyPassword.vue';
 import CheckboxFamily from './input/checkboxFamily.vue';
-import MainButton from './mainButton.vue'; 
+import MainButton from './Button/mainButton.vue'; 
 import { ref, reactive } from 'vue';
 import api from '@/_services/authservices';
 import { useRouter } from 'vue-router';

@@ -1,5 +1,10 @@
 <template>
-    <button type="submit" class="main-button">
+    <button 
+        type="submit" 
+        class="main-button"
+        :style="{ maxWidth: maxWidth }"
+    >
+        
         {{ label }}
     </button>
 </template>
@@ -10,6 +15,10 @@ export default {
         label:{
             type:String,
             default:'suivant'
+        },
+        maxWidth: {
+            type: String,
+            default: '400px'
         }
     }
 }

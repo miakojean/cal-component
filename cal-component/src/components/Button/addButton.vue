@@ -1,14 +1,23 @@
 <template>
   <button class="tool__btn">
-    Ajouter un élève
+    {{ label }}
     <i class="ri-add-line"></i>
   </button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
 
-}
+export default defineComponent ({
+
+  props:{
+    label:{
+      type:String,
+      default: "Ajouter un élève"
+    }
+  }
+
+}) 
 </script>
 
 <style scoped>
