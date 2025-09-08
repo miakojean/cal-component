@@ -55,12 +55,15 @@
                 :inputId="steps.inputId"
                 :show-validation="showValidation"
             />
-        <selectFamily v-model="selectedRole" :show-validation="showValidation"/>
-        <mainButton @click="validateCurrentStep()" type="button" label="Finaliser l'inscription"/>
-        <p class="conditions">
-          En poursuivant vous acceptez les termes et conditions 
-          d'utilisations.
-        </p>
+            <selectFamily 
+                v-model="selectedRole" 
+                :show-validation="showValidation"
+            />
+            <mainButton @click="validateCurrentStep()" type="button" label="Finaliser l'inscription"/>
+            <p class="conditions">
+            En poursuivant vous acceptez les termes et conditions 
+            d'utilisations.
+            </p>
       </form>
     </div>
 </template>
@@ -75,6 +78,8 @@ import mainButton from '../Button/mainButton.vue';
 import divider from './divider.vue';
 import secondButton from '../Button/secondButton.vue';
 import timeLines from './timeLines.vue';
+import { registerUser } from '@/_services/authservices';
+import { useRouter } from 'vue-router';
 
 interface FormField {
     inputId: string;
@@ -101,6 +106,9 @@ export default defineComponent({
     },
 
     setup() {
+
+        const router = useRouter()
+
         const step: Ref<number> = ref(1);
         const showValidation: Ref<boolean> = ref(false);
         const selectedRole: Ref<string> = ref('');
@@ -196,14 +204,15 @@ export default defineComponent({
 
         const simulateCallApi = async (): Promise<void> => {
             const payload = {
-                nom: firstStep.value[0].value,
-                prenom: firstStep.value[1].value,
+                last_name: firstStep.value[0].value,
+                firstname: firstStep.value[1].value,
                 username: firstStep.value[2].value,
                 email: secondStep.value[0].value,
                 telephone: secondStep.value[1].value,
-                dateNaissance: secondStep.value[2].value,
-                motDePasse: password.value[0].value,
-                role: selectedRole.value
+                date_of_birth: secondStep.value[2].value,
+                password: password.value[0].value,
+                password2: password.value[1].value,
+                title_category: selectedRole.value
             };
 
             console.log('Payload envoyé à l\'API:', payload);
@@ -211,12 +220,14 @@ export default defineComponent({
             try {
                 message.value.successMessages = 'Envoi en cours...';
                 
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                await registerUser(payload);
                 
                 console.log('API Response: Inscription réussie!');
                 message.value.successMessages = 'Inscription réussie!';
                 
                 resetForm();
+
+                router.push('/login')
                 
             } catch (error) {
                 console.error('API Error:', error);
@@ -236,6 +247,7 @@ export default defineComponent({
         };
 
         return { 
+            router,
             step, 
             message, 
             password, 

@@ -9,9 +9,9 @@
       <option 
         v-for="(item, index) in options" 
         :key="index" 
-        :value="item"
+        :value="item.matching"
       >
-        {{ item }}
+        {{ item.value }}
       </option>
     </select>
   </div>
@@ -28,7 +28,12 @@
       },
       options: {
         type: Array,
-        default: () => ['Fondateur', 'Directeur', 'Sécrétaire', 'Comptable', 'Autre']
+        default: () => [
+          {value:'Fondateur', matching:'FD'}, 
+          {value:'Directeur', matching:'DR'}, 
+          {value: 'Comptable', matching:"CT"},
+          {value: 'Autre', matching: 'AUT'}
+        ]
       },
       modelValue: {
         type: String,

@@ -37,6 +37,7 @@ export default {
 
 .nav__items{
     width: 100%;
+    white-space: nowrap;
     display: flex;
     justify-content: space-around;
     align-items: center;

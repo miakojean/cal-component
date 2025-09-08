@@ -1,0 +1,11 @@
+{
+  "username": "sophie.leroy",
+  "first_name":"sophie",
+  "last_name": "leroy",
+  "email": "sophie.leroy@email.com",
+  "password": "securepassword123",
+  "password2": "securepassword123",
+  "phone_number": "0612345680",
+  "date_of_birth": "1997-10-05",
+  "title_category": "FD"
+}
