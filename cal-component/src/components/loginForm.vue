@@ -121,11 +121,16 @@ export default {
         
         if (response.data.access_token || response.data.access) {
           const token = response.data.access_token || response.data.access;
+          const refreshToken = response.data.refresh_token || response.data.refresh
+          const username = response.data.user.username;
+
           localStorage.setItem('authToken', token);
+          localStorage.setItem('refresh', refreshToken);
+          localStorage.setItem('username', username);
           
+          showValidation.value = false;
           userCredentials.email = "";
           userCredentials.password = "";
-          showValidation.value = false;
           router.push('/dashboard')
         } else {
           throw new Error("Token non reçu dans la réponse");

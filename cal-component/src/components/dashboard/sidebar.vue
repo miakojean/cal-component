@@ -15,13 +15,27 @@
         </div>
 
         <div class="my__school">
-        <h4 class="bar__title">
-          Mes écoles
-          <i class="ri-add-line"></i>
-        </h4>
-        <p>Aucune école enregistrée</p>
+          <h4 class="bar__title">
+            Mes écoles
+            <i class="ri-add-line"></i>
+          </h4>
+          <p>Aucune école enregistrée</p>
+          <ul>
+            <li v-for="(school, index) in mySchool"
+              :key="index">
+                {{ school.name }}
+              </li>
+          </ul>
+        </div>
 
-      </div>
+        <div class="sidebar-footer">
+          <div class="user-profile">
+            <span class="user-logo">
+
+            </span>
+            <span class="username">{{ username }}</span>
+          </div>
+        </div>
 
         <div class="my__school">
           <h4>
@@ -33,22 +47,60 @@
         </div>
       </nav>
 
-        <div class="sidebar-footer">
-          <small>Version 1.0</small>
-        </div>
     </aside>
   </div>
 </template>
 
 <script lang="ts">
 import frame from '../items/frame.vue';
+import { isAuthenticated } from '@/_services/authservices';
+import { getOwnerSchool } from '@/_services/schoolservices';
+import { ref, onMounted } from 'vue';
+
 
 export default {
+  
   components: {
     frame,
   },
+  
   setup() {
-    return {};
+
+    const username = ref<string | null> (null)
+
+    const getUsername = () =>{
+      if(isAuthenticated()){
+        username.value = localStorage.getItem('username')
+      } else username.value = "Aucun utilisateur"
+    }
+
+    const mySchool = ref([]);
+
+    const getSchool = async () => {
+      try {
+        const response = await getOwnerSchool();
+        if (!response) {
+          console.log("La requête API a échoué");
+        } else {
+          mySchool.value = response; // on met bien la réponse dans ton tableau
+        }
+      } catch (error) {
+        console.error("Erreur API :", error);
+      }
+    };
+
+    
+    onMounted(() => {
+      getUsername();
+      getSchool();
+    });
+
+    return {
+      username,
+      getUsername,
+      getSchool,
+      mySchool
+    };
   },
 };
 </script>
@@ -155,4 +207,33 @@ export default {
     width: 100%;
     height: 100%;
 }
+
+.sidebar-footer {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* rond */
+  object-fit: cover;
+  border: 1px solid var(--primary-color);
+  background: #d1d1db;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
 </style>

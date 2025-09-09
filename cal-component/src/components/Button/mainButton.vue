@@ -42,7 +42,7 @@ export default defineComponent({
 }
 
 .main-button:hover {
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     background: rgb(29, 81, 148);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(47, 128, 237, 0.3);

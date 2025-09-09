@@ -9,3 +9,14 @@
   "date_of_birth": "1997-10-05",
   "title_category": "FD"
 }
+
+{
+  "user": "",
+  "name": "",
+  "school_type": "",
+  "address": "",
+  "logo":"",
+  "description":"",
+  "email": "",
+  "website": ""
+}
