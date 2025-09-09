@@ -1,9 +1,9 @@
 <template>
-        
+      
   <div class="dashboard__main">
     <aside class="sidebar" aria-label="Sidebar">
       <div class="brand">
-          
+        
       </div>
 
       <nav class="nav">
@@ -19,12 +19,10 @@
             Mes écoles
             <i class="ri-add-line"></i>
           </h4>
-          <p>Aucune école enregistrée</p>
-          <ul>
+          <p v-if="mySchool.length === 0">Aucune école enregistrée</p>
+          <ul v-else class="academic__list">
             <li v-for="(school, index) in mySchool"
-              :key="index">
-                {{ school.name }}
-              </li>
+            :key="index">{{ school.name }}</li>
           </ul>
         </div>
 
@@ -56,7 +54,7 @@ import frame from '../items/frame.vue';
 import { isAuthenticated } from '@/_services/authservices';
 import { getOwnerSchool } from '@/_services/schoolservices';
 import { ref, onMounted } from 'vue';
-
+import { useRouter } from 'vue-router';
 
 export default {
   
@@ -65,6 +63,8 @@ export default {
   },
   
   setup() {
+
+    const router = useRouter()
 
     const username = ref<string | null> (null)
 
@@ -79,13 +79,11 @@ export default {
     const getSchool = async () => {
       try {
         const response = await getOwnerSchool();
-        if (!response) {
-          console.log("La requête API a échoué");
-        } else {
-          mySchool.value = response; // on met bien la réponse dans ton tableau
+        if (response && response.data && response.data.schools) {
+          mySchool.value = response.data.schools; 
         }
       } catch (error) {
-        console.error("Erreur API :", error);
+        console.error("Erreur lors de la récupération des écoles :", error);
       }
     };
 
@@ -104,6 +102,9 @@ export default {
   },
 };
 </script>
+
+
+
 
 <style scoped>
 

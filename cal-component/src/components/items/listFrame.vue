@@ -1,14 +1,24 @@
 <template>
     <ul class="academic__list">
-        <li>2020-2021</li>
-        <li>2021-2022</li>
-        <li>2023-2024</li>
-        <li>2024-2025</li>
+      <li v-for="(item, index) in list"
+      :key="index">{{ item }}</li>
     </ul>
 </template>
 
 <script>
 export default {
+
+  props:{
+    list:{
+      type:Array,
+      default: () => [
+        "2020-2021",
+        "2021-2022",
+        "2023-2024",
+        "2024-2025"
+      ]
+    }
+  }
 
 }
 </script>

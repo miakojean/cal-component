@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard__tools">
-    <addButton/>
-    <researchBox/>
+    <addButton :label="addButtonLabel"/>
+    <researchBox :placeholder="placeholder"/>
     <othersButton/>
   </div>
 </template>
@@ -12,9 +12,20 @@ import othersButton from '../Button/othersButton.vue';
 import researchBox from '../input/researchBox.vue';
 export default {
     components:{
-        addButton,
-        researchBox,
-        othersButton
+      addButton,
+      researchBox,
+      othersButton
+    },
+
+    props:{
+      addButtonLabel:{
+        type:String,
+        default:"Ajouter école"
+      },
+      placeholder:{
+        type:String,
+        default:"Rechercher élève"
+      }
     }
 }
 </script>

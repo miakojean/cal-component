@@ -38,7 +38,7 @@ i{
 }
 
 i:hover{
-    transform: scale(1.1);
+    transform: scale(1.01);
     color: var(--glaucous);
     transition: 0.2s ease-in;
 }

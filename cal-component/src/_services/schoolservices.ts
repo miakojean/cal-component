@@ -21,20 +21,20 @@ const registerSchool = async (payload: object) => {
 };
 
 const getOwnerSchool = async ()  => {
-    try {
-        const response = await api.get('/school/',
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
-        console.log(response.data.schools)
-        return response;
-    } catch (error) {
-        console.log("Requête non effectuée !!!", error);
-        throw error;
-    }
+  try {
+    const response = await api.get('/school/',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    console.log(response.data.schools)
+    return response;
+  } catch (error) {
+    console.log("Requête non effectuée !!!", error);
+    throw error;
+  }
 }
 
 export {registerSchool, getOwnerSchool}
