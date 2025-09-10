@@ -33,6 +33,18 @@ const router = createRouter({
     },
 
     {
+      path:'/dashboard/classe',
+      name:'classe',
+      component: () => import('@/views/Dashboard/dashboardClasses.vue')
+    },
+
+    {
+      path:'/dashboard/class-registration',
+      name:'class-registration',
+      component: () => import('@/views/Dashboard/classRegistration.vue')
+    },
+
+    {
       path:'/dashboard/tuition',
       name:'tuition-dashboard',
       component: () => import('@/views/Dashboard/tuitionDashboard.vue')

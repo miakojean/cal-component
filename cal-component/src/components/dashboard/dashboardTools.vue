@@ -1,12 +1,13 @@
 <template>
   <div class="dashboard__tools">
-    <addButton :label="addButtonLabel"/>
+    <addButton :label="addButtonLabel" @click="registerStudent"/>
     <researchBox :placeholder="placeholder"/>
     <othersButton/>
   </div>
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
 import addButton from '../Button/addButton.vue';
 import othersButton from '../Button/othersButton.vue';
 import researchBox from '../input/researchBox.vue';
@@ -26,6 +27,16 @@ export default {
         type:String,
         default:"Rechercher élève"
       }
+    },
+
+    setup() {
+      const router = useRouter();
+
+      const registerStudent = () => {
+        router.push('/school-registration')
+      }
+
+      return{router, registerStudent}
     }
 }
 </script>

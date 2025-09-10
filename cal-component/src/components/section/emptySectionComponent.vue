@@ -5,21 +5,16 @@
         <i class="ri-school-line"></i>
       </div>
       
-      <h2 class="empty-state__title">Aucune école enrégistrée</h2>
+      <h2 class="empty-state__title">{{ whatIsEmpty }}</h2>
       
       <p class="empty-state__description">
-        Vous n'avez pas encore créé d'école. Commencez par créer votre première école 
-        pour gérer vos classes, étudiants et la scolarité.
+        {{ emptyDescription }}
       </p>
 
       <mainButton 
-        label="Ajouter mon école"
+        :label="addThing"
         @click="handleCreateSchool"
       />
-      
-      <div class="empty-state__help">
-        <p>Besoin d'aide ? <a href="#" @click.prevent="showHelp">Consulter le guide de démarrage</a></p>
-      </div>
     </div>
   </div>
 </template>
@@ -37,13 +32,32 @@ export default defineComponent({
     addButton,
     mainButton
   },
+
+  props:{
+    whatIsEmpty:{
+      type:String,
+      default:"Aucune école enrégistrée"
+    },
+    emptyDescription:{
+      type:String,
+      default:"Vous n'avez pas encore créé d'école. Commencez par créer votre première école pour gérer vos classes, étudiants et la scolarité."
+    },
+    addThing:{
+      type:String,
+      default:"Ajouter une école"
+    },
+    pathDirection:{
+      type:String,
+      default:'/school-registration'
+    }
+  },
   
-  setup() {
+  setup(props) {
 
     const router = useRouter();
 
     const handleCreateSchool = () => {
-      router.push('/school-registration')
+      router.push(`${props.pathDirection}`)
     }
 
     const showHelp = () => {
@@ -71,7 +85,7 @@ export default defineComponent({
 
 .empty-state {
   text-align: center;
-  max-width: 500px;
+  max-width: 450px;
   padding: 3rem 2rem;
   background: white;
   border-radius: 16px;
