@@ -37,4 +37,21 @@ const getOwnerSchool = async ()  => {
   }
 }
 
-export {registerSchool, getOwnerSchool}
+const createClasse = async(payload:object) => {
+  try{
+    const response = await api.post('/school/classes',
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+    });
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    console.log("Requête non effectuée !!!", error);
+    throw error;
+  }
+}
+
+export {registerSchool, getOwnerSchool, createClasse}

@@ -6,15 +6,15 @@
       placeholder="Trouver une école"
     />
     <div class="main__folder__container">
-      <div class="school_folder" 
-        @click=goToSchool
-        v-for="(school, index) in schools"
-        :key="index"
-      >
-        <i class="ri-folders-line"></i>
-        <h4>{{ school.name }}</h4>
-      </div>
+    <div class="school_folder" 
+      v-for="(school, index) in schools"
+      :key="index"
+      @click="() => goToSchool(school, school.id)"
+    >
+      <i class="ri-folders-line"></i>
+      <h4>{{ school.name }}</h4>
     </div>
+  </div>
   </section>
 </template>
 
@@ -37,11 +37,19 @@ export default {
 
   setup(props, {emit}){
     const router = useRouter();
-
-    const goToSchool = () => {
-      router.push('/dashboard/tuition')
-    }
     
+    const schooId = ref(null);
+    
+    const goToSchool = (school, school_id) => {
+      router.push({ 
+        name: 'school-name', 
+        params: { 
+          name: school.name, // Pour l'URL
+        },
+      });
+      schooId.value = sessionStorage.setItem("school_id", school_id)
+    };
+
     const schools = ref([]);
 
     const getSchool = async() => {
@@ -63,7 +71,7 @@ export default {
 
     onMounted(getSchool)
 
-    return {router, goToSchool, schools, getSchool}
+    return {router, schooId, goToSchool, schools, getSchool}
   }
 
 }

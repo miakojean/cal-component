@@ -1,31 +1,6 @@
 <template>
   <form @submit.prevent class="form__container">
     <h4 class="form__title">Formulaire d'enregistrement de classe</h4>
-    <div class="fields">
-      <!-- Sélection du type de classe -->
-      <selectFamily
-        label="Selectionner la classe"
-        input-id="type-classe"
-        placeholder="Entrer le type de classe"
-        :options="schoolCategory"
-        v-model="payload.school_type"
-        :showValidation="showValidation"
-      />
-
-      <!-- Sélection de la série (visible uniquement pour lycée) -->
-      <selectFamily
-        v-if="['2ND', '1ERE', 'TERM'].includes(payload.school_type)"
-        label="Selectionner la série"
-        input-id="serie-classe"
-        placeholder="Choisir une série"
-        :options="seriesOptions"
-        v-model="payload.serie"
-        :showValidation="showValidation"
-      />
-    </div>
-
-    <p>*Les modèles de classes suivent le système pédagogique ivoirien</p>
-
     <div class="btn__frame">
       <secondButton
         @click="goBack"
@@ -38,6 +13,30 @@
         maxWidth="200px"
       />
     </div>
+    <div class="fields">
+      <!-- Sélection du type de classe -->
+      <selectFamily
+        label="Selectionner la classe"
+        input-id="type-classe"
+        placeholder="Entrer le type de classe"
+        :options="schoolCategory"
+        v-model="payload.level"
+        :showValidation="showValidation"
+      />
+
+      <!-- Sélection de la série (visible uniquement pour lycée) -->
+      <selectFamily
+        v-if="['2ND', '1ERE', 'TERM'].includes(payload.level)"
+        label="Selectionner la série"
+        input-id="serie-classe"
+        placeholder="Choisir une série"
+        :options="seriesOptions"
+        v-model="payload.serie"
+        :showValidation="showValidation"
+      />
+    </div>
+
+    <p>*Les modèles de classes suivent le système pédagogique ivoirien</p>
   </form>
 </template>
 
@@ -45,9 +44,9 @@
 import selectFamily from '../input/selectFamily.vue';
 import mainButton from '../Button/mainButton.vue';
 import secondButton from '../Button/secondButton.vue';
-import { ref, Ref } from 'vue';
+import { ref, Ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { registerSchool } from '@/_services/schoolservices';
+import { createClasse } from '@/_services/schoolservices';
 
 export default {
   components: {
@@ -97,31 +96,87 @@ export default {
       { value: "Série F", matching: "F" },
     ];
 
+    const schoolId = sessionStorage.getItem("school_id");
+
     const payload = ref({
-      school_type: "",
+      level: "",
+      name: "",
       serie: "",
+      id: schoolId,
+    });
+
+    // Watcher pour mettre à jour le nom automatiquement quand le niveau change
+    watch(() => payload.value.level, (newLevel) => {
+      if (newLevel) {
+        // Trouver l'objet correspondant dans schoolCategory
+        const selectedCategory = schoolCategory.find(item => item.matching === newLevel);
+        if (selectedCategory) {
+          payload.value.name = selectedCategory.matching;
+        }
+      } else {
+        payload.value.name = "";
+      }
+    });
+
+    // Watcher pour la série (si applicable)
+    watch(() => payload.value.serie, (newSerie) => {
+      if (newSerie && ['2ND', '1ERE', 'TERM'].includes(payload.value.level)) {
+        // Pour les classes lycée, on combine level + série pour le nom
+        const selectedCategory = schoolCategory.find(item => item.matching === payload.value.level);
+        const selectedSerie = seriesOptions.find(item => item.matching === newSerie);
+        
+        if (selectedCategory && selectedSerie) {
+          payload.value.name = `${selectedCategory.matching}${selectedSerie.matching}`;
+        }
+      }
     });
 
     const submit = async () => {
       showValidation.value = true;
 
-      if (payload.value.school_type.trim()) {
-        registerSchool(payload.value);
-        console.log("Formulaire valide :", payload.value);
+      // Validation des champs requis
+      if (payload.value.level?.trim() && payload.value.id?.trim() && payload.value.name?.trim()) {
+        try {
+          console.log("Envoi des données :", payload.value);
+          
+          const response = await createClasse(payload.value);
+          
+          console.log("Classe créée avec succès :", response.data);
+          
+          // Redirection après succès
+          router.push('/dashboard/classe');
+          
+        } catch (error: any) {
+          console.error("Erreur lors de la création de la classe :", error);
+          
+          // Gestion d'erreur plus détaillée
+          if (error.response) {
+            console.error("Réponse d'erreur du serveur :", error.response.data);
+            alert(`Erreur: ${error.response.data.message || 'Erreur serveur'}`);
+          } else if (error.request) {
+            console.error("Aucune réponse du serveur :", error.request);
+            alert("Erreur de connexion au serveur");
+          } else {
+            console.error("Erreur de configuration :", error.message);
+            alert("Erreur de configuration de la requête");
+          }
+        }
       } else {
-        console.log("Formulaire invalide : type de classe manquant");
+        console.log("Formulaire invalide - champs manquants :", payload.value);
+        alert("Veuillez remplir tous les champs obligatoires");
       }
     };
 
     const goBack = () => {
-      router.push('/dashboard');
+      router.push('/dashboard/classe');
     };
-
+    
     return {
       router,
       showValidation,
       schoolCategory,
       seriesOptions,
+      schoolId,
       payload,
       submit,
       goBack,

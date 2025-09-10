@@ -21,9 +21,16 @@ const router = createRouter({
     
     // This about the dashboard
     {
-      path:'/dashboard',
+      path:'/dashboard/school/',
       name:'dashboard',
       component: () => import('@/views/Dashboard/dashBoardIndex.vue')
+    },
+
+    {
+      // AVANT: path:'/dashboard/school/:name',
+      path:'/dashboard/school/:name', // APRÈS
+      name:'school-name',
+      component: () => import('@/views/Dashboard/dashboardClasses.vue')
     },
 
     {
