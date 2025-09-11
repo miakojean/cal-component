@@ -1,3 +1,4 @@
+
 <template>
   <form @submit.prevent class="form__container">
     <h4 class="form__title">Formulaire d'enregistrement de classe</h4>
@@ -15,7 +16,6 @@
     </div>
     <div class="fields">
       <!-- Sélection du type de classe -->
-
       <select-class-family
         label="Selectionner la classe"
         input-id="type-classe"
@@ -83,6 +83,7 @@ export default {
 
     const schoolId = sessionStorage.getItem("school_id");
 
+    // Correction: Gérer la valeur de la série avec "NA" comme valeur par défaut
     const seriesValue = computed({
       get: () => payload.value.series || 'NA',
       set: (newValue) => {
@@ -94,27 +95,38 @@ export default {
       school: schoolId,
       name: "",
       level: "",
-      series: "",
+      series: "", // Initialiser avec une chaîne vide
       academic_year: "2024-2025"
     });
 
     const submit = async () => {
       showValidation.value = true;
 
+      // Préparer les données à envoyer
+      const dataToSend = {
+        ...payload.value,
+        // Correction: Envoyer "NA" si la série est vide
+        series: payload.value.series.trim() === "" ? "NA" : payload.value.series
+      };
+
       // Validation des champs requis
-      if (payload.value.level?.trim() && payload.value.name?.trim()) {
+      if (dataToSend.level?.trim() && dataToSend.name?.trim()) {
         try {
-          console.log("Envoi des données :", payload.value);
+          console.log("Envoi des données :", dataToSend);
           
-          //const response = await createClasse(payload.value);
+          const response = await createClasse(dataToSend);
           
-          //console.log("Classe créée avec succès :", response.data);
+          console.log("Classe créée avec succès :", response.data);
+          
+          // Redirection après succès
+          router.push('/dashboard/classe');
           
         } catch (error: any) {
           console.error("Erreur lors de la création de la classe :", error);
+          alert("Erreur lors de la création de la classe: " + (error.response?.data?.message || error.message));
         }
       } else {
-        console.log("Formulaire invalide - champs manquants :", payload.value);
+        console.log("Formulaire invalide - champs manquants :", dataToSend);
         alert("Veuillez remplir tous les champs obligatoires");
       }
     };
