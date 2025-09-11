@@ -131,7 +131,7 @@ export default {
           showValidation.value = false;
           userCredentials.email = "";
           userCredentials.password = "";
-          router.push('/dashboard')
+          router.push('/dashboard/school')
         } else {
           throw new Error("Token non reçu dans la réponse");
         }
